@@ -1,0 +1,17 @@
+{% if user_ip %}
+
+<h1>
+    Hello world Platzi, tu ip es  {{ user_ip}}
+    <!-- Se crean los dobles corchetes y la variable enviada -->
+</h1>
+{% else %}
+
+    <a href="{{ url_for('index')}}"> ir a inicio</a>
+
+{% endif %}
+
+<ul>
+    {% for todo in to_dos  %}
+        <li>{{todo}}</li>
+    {% endfor %}
+</ul>
