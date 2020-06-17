@@ -1,0 +1,35 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+    {{super()}}
+    <!-- Le decimos que herede todo de su template padre -->
+        <title>{% block title %}
+        Flask Platzi | 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+    {% endblock title %}</title>
+  
+{% endblock head %}
+{% block body %}
+
+    {% block navbar %}
+        {% include "nav_bar.html" %}
+    {% endblock navbar %}
+    {% for message in get_flashed_messages()  %}
+      <div class="alert alert-success alert-dismissable">
+          <!-- Para bootstrap un flash es un alert, dismissable es de que se podra quitar -->
+          <button type="button" 
+                  data-dismiss="alert"
+                  class="close">
+                &times;
+                <!-- ESta es una xs en  -->
+          </button>
+            {{message}}
+      </div>
+    {% endfor %}
+    {% block content %}
+    {% endblock content %} 
+      {% block scripts %}
+        {{super()}}
+      {% endblock scripts %}
+{% endblock body %}
+

@@ -1,17 +1,38 @@
-{% if user_ip %}
 
-<h1>
-    Hello world Platzi, tu ip es  {{ user_ip}}
-    <!-- Se crean los dobles corchetes y la variable enviada -->
-</h1>
-{% else %}
+{% extends "base.html" %}
+{% import 'macros.html' as macros%}
+{% import 'bootstrap/wtf.html' as wtf%}
 
-    <a href="{{ url_for('index')}}"> ir a inicio</a>
+{% block title %}
+    {{ super()}}
+  Bienvenidos 
+{% endblock title %}
 
-{% endif %}
+{% block content %}
+    {% if username %}
+        <h1>Bienvenido {{ username | capitalize}}</h1>  
+    {% endif %}
+    {% if user_ip %}
+    <h3>
+        Hello world Platzi, tu ip es  {{ user_ip}}
+        <!-- Se crean los dobles corchetes y la variable enviada -->
+    </h3>
+    {% else %}
 
-<ul>
-    {% for todo in to_dos  %}
-        <li>{{todo}}</li>
-    {% endfor %}
-</ul>
+        <a href="{{ url_for('index')}}"> ir a inicio</a>
+
+    {% endif %}
+    <div class="container">
+        <form action="{{url_for('hello')}}" method="POST">
+            <!-- url_for es donde queremos que se haga el post -->
+            <!-- {{login_form.username}}
+            {{login_form.username.label}} -->
+            {{ wtf.quick_form(login_form)}}
+        </form>
+    </div>
+    <ul>
+        {% for todo in to_dos  %}
+            {{ macros.render_todo(todo) }}
+        {% endfor %}
+    </ul>
+{% endblock content %}
