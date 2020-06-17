@@ -1,13 +1,10 @@
-from flask import Flask, request, make_response, redirect, render_template, abort, session, url_for, flash
-from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
+from flask import request, make_response, redirect, render_template, abort, session, url_for, flash
 import unittest
 
-app = Flask(__name__)
-bootstrap = Bootstrap(app)
-app.config['SECRET_KEY'] = 'SUPER SECRETO'
+from app import create_app
+from app.forms import loginForm
+
+app = create_app()
 
 to_dos = ['Comprar cafe', 'Solicitud de compra', 'Entregar video al producto']
 
@@ -15,13 +12,6 @@ to_dos = ['Comprar cafe', 'Solicitud de compra', 'Entregar video al producto']
 def test():
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner().run(tests)
-    
-
-class loginForm(FlaskForm):
-    """Tendremos el campo del usuario y dos campos del usuario"""
-    username = StringField('Nombre de usuario', validators=[DataRequired()])
-    password = PasswordField('Password',validators=[DataRequired()])
-    submit = SubmitField('Enviar')
 
 @app.errorhandler(500)
 def server_error_found(error):
